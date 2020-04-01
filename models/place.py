@@ -29,6 +29,8 @@ class Place(BaseModel, Base):
     __tablename__ = "places"
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
+        reviews = relationship("Place", backref="place",
+                               cascade="all, delete-orphan")
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
@@ -40,7 +42,7 @@ class Place(BaseModel, Base):
         latitude = Column(Float)
         longitude = Column(Float)
         amenity_ids = []
-    elif os.getenv('HBNB_TYPE_STORAGE') == 'file':
+    else:
         city_id = ""
         user_id = ""
         name = ""

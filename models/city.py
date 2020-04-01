@@ -21,6 +21,6 @@ class City(BaseModel, Base):
                               cascade="all, delete-orphan")
         state_id = Column(String(60), ForeignKey('states.id'), nullable=False)
         name = Column(String(128), nullable=False)
-    elif os.getenv('HBNB_TYPE_STORAGE') == 'file':
+    else:
         state_id = ''
         name = ''
