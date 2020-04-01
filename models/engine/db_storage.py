@@ -9,10 +9,12 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from os import getenv
-from sqlalchemy import create_engine 
+from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 
-all_classes = {"State", "City"}
+
+all_classes = {"State", "City", "User", "Place"}
+
 
 class DBStorage():
     """
@@ -30,7 +32,7 @@ class DBStorage():
 
         self.reload()
 
-        if getenv('HBNB_ENV')  == 'test':
+        if getenv('HBNB_ENV') == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
