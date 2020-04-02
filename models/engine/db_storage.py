@@ -43,7 +43,6 @@ class DBStorage():
             return self.get_data_from_table(cls, entities)
         for entity in all_classes:
             entities = self.get_data_from_table(eval(entity), entities)
-        self.__session.close()
         return entities
 
     def get_data_from_table(self, cls, structure):
