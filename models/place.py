@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 """This is the place class"""
-from models.base_model import BaseModel, Base
-import models
-from models.city import City
-from models.user import User
-import os
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey, Float
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
+from models.base_model import BaseModel, Base
+import os
+
+
+
 
 
 class Place(BaseModel, Base):
@@ -27,11 +27,26 @@ class Place(BaseModel, Base):
     """
 
     __tablename__ = "places"
-
+    place_amenity = Table('place_amenity', Base.metadata,
+                      Column('place_id',
+                             String(60),
+                             ForeignKey('places.id'),
+                             primary_key=True,
+                             nullable=False),
+                      Column('amenity_id',
+                             String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True,
+                             nullable=False))
 
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        reviews = relationship("Review", backref="place",
-                              cascade="all, delete-orphan")
+        reviews = relationship("Review",
+                               backref="place",
+                               cascade="all, delete-orphan")
+        amenities = relationship("Amenity",
+                                 secondary=place_amenity,
+                                 viewonly=False,
+                                 back_populates="place_amenities")
         city_id = Column(String(60), ForeignKey('cities.id'), nullable=False)
         user_id = Column(String(60), ForeignKey('users.id'), nullable=False)
         name = Column(String(128), nullable=False)
@@ -63,3 +78,16 @@ class Place(BaseModel, Base):
                 if review.place_id == self.id:
                     review_list.append(review)
             return review_list
+
+        @property
+        def amenities(self):
+            amenities_list = []
+            for obj in self.amenity_ids:
+                if obj.id == self.id:
+                    amenities_list.append(obj)
+            return amenities_list
+
+        @amenities.setter
+        def amenities(self, obj):
+            if obj.__class__.__name__ == 'Amenity':
+                self.amenity_ids.append(obj.id)
