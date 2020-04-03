@@ -144,7 +144,6 @@ class TestHBNBCommand(unittest.TestCase):
             self.assertIn(am, f.getvalue())
 
     @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
-
     def test_show(self):
         """Test show command."""
         with patch("sys.stdout", new=StringIO()) as f:
