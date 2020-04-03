@@ -65,7 +65,6 @@ class TestUser(unittest.TestCase):
     @unittest.skipIf(
        os.getenv('HBNB_TYPE_STORAGE') == 'db',
        "This test only work in Filestorage")
-
     def test_save_User(self):
         """test if the save works"""
         self.user.save()
