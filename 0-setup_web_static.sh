@@ -6,7 +6,8 @@ sudo apt-get -y update
 sudo apt-get -y install nginx
 
 # 2 create directories if not created
-sudo mkdir -p /data/web_static/releases/test/ /data/web_static/shared
+sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/shared
 
 # 3 create html file in the test directory
 sudo echo -e '<!DOCTYPE html>
