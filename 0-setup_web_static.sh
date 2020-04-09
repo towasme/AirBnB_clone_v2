@@ -29,7 +29,7 @@ sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 sudo chown -R ubuntu:ubuntu /data
 
 # 6 add a static web page in a certain path
-sudo sed -i '38a location = /hbnb_static/ { \n alias data/web_static/current/;\n}' /etc/nginx/sites-enabled/default
+sudo sed -i "/# Only/ i location /hbnb_static {\nalias /data/web_static/current;\n}" /etc/nginx/sites-enabled/default
 
 # 7 restart nginx
 sudo service nginx restart
