@@ -9,10 +9,10 @@ from models import State
 app = Flask(__name__)
 
 
-@app.teardown_appcontext()
-def storage_close():
+@app.teardown_appcontext
+def storage_close(self):
     """ closes storage """
-    return storage.close()
+    storage.close()
 
 
 @app.route('/states_list', strict_slashes=False)
