@@ -74,4 +74,5 @@ class FileStorage:
             self.save()
 
     def close(self):
+        """ closes the json file """
         self.reload()
