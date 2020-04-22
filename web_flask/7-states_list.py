@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """ Write a script that starts a Flask web application """
-from flask import Flask
-from flask import render_template
+from flask import Flask, render_template
 from models import storage
 from models.state import State
 
@@ -26,4 +25,4 @@ def close_storage(self):
 
 if __name__ == '__main__':
     """ Web app must be listening on 0.0.0.0 port 5000 """
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
