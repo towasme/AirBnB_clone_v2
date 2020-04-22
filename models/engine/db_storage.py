@@ -13,7 +13,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, scoped_session
 
 
-all_classes = {"State", "City", "User", "Place", "Review", "Amenity"}
+all_classes = {'State': State,
+               'City': City,
+               'User': User,
+               'Place': Place,
+               'Review': Review,
+               'Amenity': Amenity}
 
 
 class DBStorage():
@@ -39,21 +44,21 @@ class DBStorage():
         """return dict for cls
         """
         entities = dict()
-        if cls:
-            return self.get_data_from_table(cls, entities)
-        for entity in all_classes:
-            entities = self.get_data_from_table(eval(entity), entities)
+        if cls is None:
+            for item in all_classes.keys():
+                query = self.__session.query(all_classes[item])
+                for instance in query:
+                    k = instance.__class__.__name__ + "." + instance.id
+                    entities[k] = instance
+        elif cls is not None:
+            if cls in all_classes:
+                query = self.__session.query(all_classes[cls])
+            else:
+                query = self.__session.query(cls)
+            for instance in query:
+                k = instance.__class__.__name__ + "." + instance.id
+                entities[k] = instance
         return entities
-
-    def get_data_from_table(self, cls, structure):
-        """get data from table
-        """
-        if type(structure) is dict:
-            query = self.__session.query(cls)
-            for _row in query.all():
-                key = "{}.{}".format(cls.__name__, _row.id)
-                structure[key] = _row
-            return structure
 
     def new(self, obj):
         """Add obj to the current database session."""
