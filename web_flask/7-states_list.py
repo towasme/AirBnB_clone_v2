@@ -9,16 +9,17 @@ from models.state import State
 app = Flask(__name__)
 
 
+@app.route('/states_list', strict_slashes=False)
+def list_states():
+    """ list the states in html"""
+    list_s = storage.all('State')
+    return render_template('7-states_list.html', list_s=list_s)
+
+
 @app.teardown_appcontext
 def storage_close(self):
     """ closes storage """
     storage.close()
-
-
-@app.route('/states_list', strict_slashes=False)
-def list_states():
-    list_s = storage.all('State')
-    return render_template('7-states_list.html', list_s=list_s)
 
 
 if __name__ == '__main__':
