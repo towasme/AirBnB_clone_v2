@@ -6,7 +6,7 @@
     <BODY>
         <H1>States</H1>
         <UL>
-            {% for key in list_of_city.values() | sort(attribute='name') %}    
+            {% for key in list_s.values() | sort(attribute='name') %}    
                 <LI>{{ key.id }}: <B>{{ key.name }}</B>
                     <UL>
                         {% for city in key.cities | sort(attribute='name' %}

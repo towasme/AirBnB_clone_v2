@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Write a script that starts a Flask web application """
+""" Script that starts a Flask web application """
 from flask import Flask, render_template
 from models import storage
 from models.state import State
@@ -9,11 +9,10 @@ app = Flask(__name__)
 
 
 @app.route('/cities_by_states', strict_slashes=False)
-def print_city_list():
-    """ display html """
-    list_of_city = storage.all('State')
-    return render_template('8-cities_by_states.html',
-                           list_of_city=list_of_city)
+def print_states_list():
+    """ display a HTML page """
+    list_s = storage.all('State')
+    return render_template('8-cities_by_states.html', list_s=list_s)
 
 
 @app.teardown_appcontext
