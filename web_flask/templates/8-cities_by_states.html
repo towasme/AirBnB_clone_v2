@@ -6,15 +6,15 @@
     <BODY>
         <H1>States</H1>
         <UL>
-            {% for key in list_s.values() | sort(attribute='name') %}    
+        {% for key in list_s.values() | sort(attribute='name') %}
                 <LI>{{ key.id }}: <B>{{ key.name }}</B>
-                    <UL>
-                        {% for city in key.cities | sort(attribute='name' %}
-                            <LI>{{ city.id }}: <B>{{ city.name }}</B></LI>
+                        {% for c in key.cities | sort(attribute='name') %}
+                        <UL>
+                                <LI>{{ c.id }}: <B>{{ c.name }}</B></LI>
+                        </UL>
                         {% endfor %}
-                    </UL>
                 </LI>
-            {% endfor %}            
-        </UL>
+        {% endfor %}
+           </UL>
     </BODY>
 </HTML>
